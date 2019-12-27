@@ -1,0 +1,81 @@
+package problem_2_add_two_numbers
+
+type ListNode struct {
+	Val  int
+	Next *ListNode
+}
+
+func (l *ListNode) ToSlice() []int {
+	nums := make([]int, 0)
+
+	curr := l
+	for curr != nil {
+		nums = append(nums, curr.Val)
+		curr = curr.Next
+	}
+	return nums
+}
+
+// 关键是要使用两个指针，preHead用来指向新链表的头节点，prev用来在遍历链表的过程中将各个新节点串联起来
+func AddTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
+	p1, p2 := l1, l2
+
+	preHead := &ListNode{}
+	prev := preHead
+
+	carry := 0
+	for p1 != nil && p2 != nil {
+		newNode := &ListNode{}
+		newNode.Val = p1.Val + p2.Val + carry
+		carry = 0
+		if newNode.Val >= 10 {
+			newNode.Val = newNode.Val % 10
+			carry = 1
+		}
+
+		prev.Next = newNode
+		prev = newNode
+
+		p1 = p1.Next
+		p2 = p2.Next
+	}
+	for p1 != nil {
+		newNode := &ListNode{}
+		newNode.Val = p1.Val + carry
+		carry = 0
+		if newNode.Val >= 10 {
+			newNode.Val = 0
+			carry = 1
+		}
+
+		prev.Next = newNode
+		prev = newNode
+
+		p1 = p1.Next
+	}
+	for p2 != nil {
+		newNode := &ListNode{}
+		newNode.Val = p2.Val + carry
+		carry = 0
+		if newNode.Val >= 10 {
+			newNode.Val = 0
+			carry = 1
+		}
+
+		prev.Next = newNode
+		prev = newNode
+
+		p2 = p2.Next
+	}
+
+	if carry > 0 {
+		newNode := &ListNode{}
+		newNode.Val = carry
+		carry = 0
+
+		prev.Next = newNode
+		prev = newNode
+	}
+
+	return preHead.Next
+}
