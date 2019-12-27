@@ -24,48 +24,26 @@ func AddTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
 	prev := preHead
 
 	carry := 0
-	for p1 != nil && p2 != nil {
+	for p1 != nil || p2 != nil {
+		val1, val2 := 0, 0
+		if p1 != nil {
+			val1 = p1.Val
+			p1 = p1.Next
+		}
+		if p2 != nil {
+			val2 = p2.Val
+			p2 = p2.Next
+		}
+
 		newNode := &ListNode{}
-		newNode.Val = p1.Val + p2.Val + carry
+		newNode.Val = val1 + val2 + carry
 		carry = 0
 		if newNode.Val >= 10 {
 			newNode.Val = newNode.Val % 10
 			carry = 1
 		}
-
 		prev.Next = newNode
 		prev = newNode
-
-		p1 = p1.Next
-		p2 = p2.Next
-	}
-	for p1 != nil {
-		newNode := &ListNode{}
-		newNode.Val = p1.Val + carry
-		carry = 0
-		if newNode.Val >= 10 {
-			newNode.Val = 0
-			carry = 1
-		}
-
-		prev.Next = newNode
-		prev = newNode
-
-		p1 = p1.Next
-	}
-	for p2 != nil {
-		newNode := &ListNode{}
-		newNode.Val = p2.Val + carry
-		carry = 0
-		if newNode.Val >= 10 {
-			newNode.Val = 0
-			carry = 1
-		}
-
-		prev.Next = newNode
-		prev = newNode
-
-		p2 = p2.Next
 	}
 
 	if carry > 0 {
