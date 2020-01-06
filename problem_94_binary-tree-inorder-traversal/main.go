@@ -44,3 +44,27 @@ func IterativeInorderTraversal(root *TreeNode) []int {
 
 	return vals
 }
+
+func MorrisInorderTraversal(root *TreeNode) []int {
+	vals := make([]int, 0)
+	if root == nil {
+		return vals
+	}
+
+	curr := root
+	var pre *TreeNode
+	for curr != nil {
+		if curr.Left == nil {
+			vals = append(vals, curr.Val)
+			curr = curr.Right
+		} else {
+			pre = curr.Left
+			for pre.Right != nil {
+				pre = pre.Right
+			}
+			pre.Right = curr
+			curr, curr.Left = curr.Left, nil
+		}
+	}
+	return vals
+}

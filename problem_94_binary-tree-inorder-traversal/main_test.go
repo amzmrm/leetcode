@@ -82,7 +82,7 @@ func TestInorderTraversal(t *testing.T) {
 
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			got := IterativeInorderTraversal(test.tree)
+			got := MorrisInorderTraversal(test.tree)
 			if !reflect.DeepEqual(got, test.expect) {
 				t.Fatalf("got:%#v, expect:%#v", got, test.expect)
 			}
