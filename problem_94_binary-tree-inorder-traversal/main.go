@@ -18,3 +18,29 @@ func InorderTraversal(root *TreeNode) []int {
 
 	return ret
 }
+
+func IterativeInorderTraversal(root *TreeNode) []int {
+	vals := make([]int, 0)
+	if root == nil {
+		return vals
+	}
+
+	// 使用slice模拟一个栈
+	stack := make([]*TreeNode, 0)
+	curr := root
+	for curr != nil || len(stack) > 0 {
+		// 循环遍历左子树，直到叶子节点
+		// 只要curr不是nil，不管是左子树还是右子树都入栈
+		for curr != nil {
+			stack = append(stack, curr)
+			curr = curr.Left
+		}
+
+		// 左子树遍历遇到了叶子节点，开始出栈
+		curr, stack = stack[len(stack)-1], stack[:len(stack)-1]
+		vals = append(vals, curr.Val) // 子树的根节点
+		curr = curr.Right             /// 开始遍历右子树
+	}
+
+	return vals
+}

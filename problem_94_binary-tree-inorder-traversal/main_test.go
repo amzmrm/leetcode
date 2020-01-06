@@ -25,11 +25,11 @@ func TestInorderTraversal(t *testing.T) {
 	root1Node1.Right = root1Node3
 	root1Node2.Left = root1Node4
 	root1Node2.Right = root1Node5
-	root1Node3.Left = root1Node6
+	root1Node3.Right = root1Node6
 	tests = append(tests, test{
 		name:   "normal",
 		tree:   root1Node1,
-		expect: []int{4, 2, 5, 1, 6, 3},
+		expect: []int{4, 2, 5, 1, 3, 6},
 	})
 
 	// 空二叉树
@@ -82,8 +82,8 @@ func TestInorderTraversal(t *testing.T) {
 
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			got := InorderTraversal(test.tree)
-			if !reflect.DeepEqual(InorderTraversal(test.tree), test.expect) {
+			got := IterativeInorderTraversal(test.tree)
+			if !reflect.DeepEqual(got, test.expect) {
 				t.Fatalf("got:%#v, expect:%#v", got, test.expect)
 			}
 		})
