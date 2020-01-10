@@ -80,9 +80,27 @@ func TestInorderTraversal(t *testing.T) {
 		expect: []int{1, 2, 3},
 	})
 
+	// 迭代遍历测试用例
+	root7Node1 := &TreeNode{Val: 1}
+	root7Node2 := &TreeNode{Val: 2}
+	root7Node3 := &TreeNode{Val: 3}
+	root7Node4 := &TreeNode{Val: 4}
+	root7Node5 := &TreeNode{Val: 5}
+	root7Node6 := &TreeNode{Val: 6}
+	root7Node1.Right = root7Node2
+	root7Node2.Right = root7Node3
+	root7Node3.Right = root7Node4
+	root7Node4.Left = root7Node5
+	root7Node5.Right = root7Node6
+	tests = append(tests, test{
+		name:   "Iterative traversal",
+		tree:   root7Node1,
+		expect: []int{1, 2, 3, 4, 5, 6},
+	})
+
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			got := PreorderTraversal(test.tree)
+			got := IterativePreorderTraversal(test.tree)
 			if !reflect.DeepEqual(PreorderTraversal(test.tree), test.expect) {
 				t.Fatalf("got:%#v, expect:%#v", got, test.expect)
 			}

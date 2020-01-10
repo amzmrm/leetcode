@@ -19,3 +19,27 @@ func PreorderTraversal(root *TreeNode) []int {
 	return ret
 }
 
+func IterativePreorderTraversal(root *TreeNode) []int {
+	values := make([]int, 0)
+	stack := make([]*TreeNode, 0)
+
+	curr := root
+	for curr != nil || len(stack) > 0 {
+		if curr == nil {
+			curr, stack = stack[len(stack)-1], stack[:len(stack)-1]
+			continue
+		}
+
+		values = append(values, curr.Val)
+		if curr.Left != nil {
+			if curr.Right != nil {
+				stack = append(stack, curr.Right)
+			}
+			curr = curr.Left
+		} else {
+			curr = curr.Right
+		}
+	}
+
+	return values
+}
