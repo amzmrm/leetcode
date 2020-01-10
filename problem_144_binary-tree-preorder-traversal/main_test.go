@@ -98,9 +98,25 @@ func TestInorderTraversal(t *testing.T) {
 		expect: []int{1, 2, 3, 4, 5, 6},
 	})
 
+	// Morris遍历测试用例
+	root8Node1 := &TreeNode{Val:1}
+	root8Node2 := &TreeNode{Val:2}
+	root8Node3 := &TreeNode{Val:3}
+	root8Node4 := &TreeNode{Val:4}
+	root8Node5 := &TreeNode{Val:5}
+	root8Node1.Left = root8Node2
+	root8Node1.Right = root8Node5
+	root8Node2.Left = root8Node3
+	root8Node2.Right = root8Node4
+	tests = append(tests, test{
+		name:   "Morris traversal",
+		tree:   root8Node1,
+		expect: []int{1, 2, 3, 4, 5},
+	})
+
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			got := IterativePreorderTraversal(test.tree)
+			got := MorrisPreorderTraversal(test.tree)
 			if !reflect.DeepEqual(PreorderTraversal(test.tree), test.expect) {
 				t.Fatalf("got:%#v, expect:%#v", got, test.expect)
 			}
