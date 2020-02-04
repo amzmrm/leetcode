@@ -53,6 +53,8 @@ func helper1(currentNode, p, q *TreeNode) (*TreeNode, bool) {
 	}
 }
 
+// 使用map存储一个节点的祖先节点的技巧：节点的左右孩子作为key，节点作为value。
+// 这样可以获取到给定节点的父节点，父节点的父节点...也就是给定节点的所有祖先节点。
 func helper2(root, p, q *TreeNode) *TreeNode {
 	// 帮助遍历二叉树的栈
 	stack := make([]*TreeNode, 0)
