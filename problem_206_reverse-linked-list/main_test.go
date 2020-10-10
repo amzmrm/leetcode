@@ -54,11 +54,11 @@ func TestReverseList(t *testing.T) {
 	tests = append(tests, test{
 		list:   list4,
 		name:   "length is 2",
-		expect: []int{2,1},
+		expect: []int{2, 1},
 	})
 
 	for _, test := range tests {
-		got := ReverseList(test.list)
+		got := ReverseList2(test.list)
 		if !reflect.DeepEqual(got.ToSlice(), test.expect) {
 			t.Fatalf("got:%#v, expect:%#v", got.ToSlice(), test.expect)
 		}
