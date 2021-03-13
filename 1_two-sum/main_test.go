@@ -23,7 +23,7 @@ func TestTwoSum(t *testing.T) {
 
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			got := TwoSum(test.list, test.target)
+			got := twoSum(test.list, test.target)
 			if !reflect.DeepEqual(got, test.expect) {
 				t.Fatalf("got:%#v, expect:%#v", got, test.expect)
 			}

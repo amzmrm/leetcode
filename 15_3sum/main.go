@@ -5,21 +5,19 @@ import "sort"
 // 时间复杂度：O(n^2)
 // 空间复杂度：O(1)
 func ThreeSum(nums []int) [][]int {
-	ret := make([][]int, 0)
-
 	if nums == nil || len(nums) < 3 {
-		return ret
+		return nil
 	}
-
 	sort.Ints(nums)
-
 	if nums[0] > 0 {
-		return ret
+		return nil
 	}
 
+	ret := make([][]int, 0)
 	sum, left, right := 0, 0, 0
 	for i := 0; i < len(nums); i++ {
-		if i > 0 && nums[i] == nums[i-1] {
+		for i > 0 && i < len(nums)-1 && nums[i] == nums[i-1] {
+			i++
 			continue
 		}
 
@@ -44,4 +42,59 @@ func ThreeSum(nums []int) [][]int {
 		}
 	}
 	return ret
+}
+
+func threeSum2(nums []int, target int) [][]int {
+	return threeSumTarget(nums, target, false)
+}
+
+func threeSumTarget(nums []int, target int, returnIndex bool) [][]int {
+	sort.Ints(nums)
+	var res [][]int
+	for i := 0; i < len(nums); i++ {
+		tuples := twoSumTarget(nums, i+1, target-nums[i], returnIndex)
+		for _, tuple := range tuples {
+			if returnIndex {
+				tuple = append(tuple, i)
+				res = append(res, tuple)
+			} else {
+				tuple = append(tuple, nums[i])
+				res = append(res, tuple)
+			}
+		}
+		for i < len(nums)-1 && nums[i] == nums[i+1] {
+			i++
+		}
+	}
+	return res
+}
+
+func twoSumTarget(nums []int, start int, target int, returnIndex bool) [][]int {
+	var res [][]int
+	sort.Ints(nums)
+	left, right, sum := start, len(nums)-1, 0
+	leftElem, rightElem := 0, 0
+	for left < right {
+		leftElem, rightElem = nums[left], nums[right]
+		sum = leftElem + rightElem
+		if sum < target {
+			for left < right && nums[left] == leftElem {
+				left++
+			}
+		} else if sum > target {
+			for left < right && nums[right] == rightElem {
+				right--
+			}
+		} else {
+			if returnIndex {
+				res = append(res, []int{left, right})
+			} else {
+				res = append(res, []int{nums[left], nums[right]})
+			}
+			for left < right && nums[left] == leftElem {
+				left++
+			}
+		}
+	}
+	return res
 }
