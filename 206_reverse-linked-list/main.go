@@ -56,3 +56,13 @@ func ReverseListRecursively(head *ListNode) *ListNode {
 
 	return ret
 }
+
+func reverse(head *ListNode) *ListNode {
+	if head == nil || head.Next == nil {
+		return head
+	}
+	newHead := reverse(head.Next)
+	head.Next.Next = head
+	head.Next = nil
+	return newHead
+}
