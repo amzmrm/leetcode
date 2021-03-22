@@ -6,11 +6,12 @@ func Fib(N int) int {
 		return results[N]
 	}
 
-	fibOne, fibTwo, fibN := 1, 0, 0
+	fibOne, fibTwo := 0, 1
+	var fibN int
 	for i := 2; i <= N; i++ {
 		fibN = fibOne + fibTwo
-		fibTwo = fibOne
-		fibOne = fibN
+		fibOne = fibTwo
+		fibTwo = fibN
 	}
 	return fibN
 }
