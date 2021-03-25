@@ -3,15 +3,14 @@ package leetcode
 import "sort"
 
 func twoSum(nums []int, target int) []int {
-	m := make(map[int]int, 0)
-	for i := 0; i < len(nums); i++ {
-		complement := target - nums[i]
-		if cpm, ok := m[complement]; ok {
-			return []int{cpm, i}
+	hashTable := map[int]int{}
+	for i, num := range nums {
+		if idx, ok := hashTable[target-num]; ok {
+			return []int{idx, i}
 		}
-		m[nums[i]] = i
+		hashTable[num] = i
 	}
-	return []int{}
+	return nil
 }
 
 func twoSum2(nums []int, target int) []int {
