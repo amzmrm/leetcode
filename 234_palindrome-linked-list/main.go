@@ -25,26 +25,24 @@ func IsPalindrome(head *ListNode) bool {
 		return false
 	}
 
-	firstHalfEnd := endOfFirstHalf(head)
-	secondHalfStart := reverse(firstHalfEnd.Next)
+	middle := middleNode(head)
+	secondHalfStart := reverse(middle.Next)
 
-	firstPosition, secondPosition := head, secondHalfStart
-
-	ok := true
-	for ok && secondPosition != nil {
-		if firstPosition.Val != secondPosition.Val {
-			ok = false
+	firstPos, secondPos := head, secondHalfStart
+	for secondPos != nil {
+		if firstPos.Val != secondPos.Val {
+			return false
 		}
-		firstPosition = firstPosition.Next
-		secondPosition = secondPosition.Next
+		firstPos = firstPos.Next
+		secondPos = secondPos.Next
 	}
 
-	firstHalfEnd.Next = reverse(secondHalfStart)
+	middle.Next = reverse(secondHalfStart)
 
-	return ok
+	return true
 }
 
-func endOfFirstHalf(head *ListNode) *ListNode {
+func middleNode(head *ListNode) *ListNode {
 	slow, fast := head, head
 	for fast.Next != nil && fast.Next.Next != nil {
 		slow = slow.Next
