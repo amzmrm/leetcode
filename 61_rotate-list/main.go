@@ -10,30 +10,37 @@ func RotateList(head *ListNode, k int) *ListNode {
 		return nil
 	}
 
-	if k == 0 {
+	var length int
+	var tail *ListNode
+	for curr := head; curr != nil; {
+		tail = curr
+		length++
+		curr = curr.Next
+	}
+	steps := k % length
+	if steps == 0 {
 		return head
 	}
 
-	var length int
-	for p := head; p != nil; p = p.Next {
-		length++
-	}
-
-	first, second := head, head
-
-	steps := k % length
-	for i := 0; i < steps; i++ {
-		second = second.Next
-	}
-
-	for second.Next != nil {
-		first = first.Next
-		second = second.Next
-	}
-
-	second.Next = head
-	newHead := first.Next
-	first.Next = nil
-
+	newTail := getKthFromEnd(head, steps+1)
+	newHead := newTail.Next
+	tail.Next = head
+	newTail.Next = nil
 	return newHead
+}
+
+func getKthFromEnd(head *ListNode, k int) *ListNode {
+	if head == nil {
+		return nil
+	}
+	fast, slow := head, head
+	for fast != nil && k > 0 {
+		fast = fast.Next
+		k--
+	}
+	for fast != nil {
+		slow = slow.Next
+		fast = fast.Next
+	}
+	return slow
 }
