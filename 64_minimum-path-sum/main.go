@@ -75,26 +75,18 @@ func minPathSumWithDP(grid [][]int) int {
 	for i := 0; i < rows; i++ {
 		states[i] = make([]int, cols)
 	}
-
-	// 初始化states的第一列数据
-	sum := 0
+	states[0][0] = grid[0][0]
 	for i := 0; i < rows; i++ {
-		sum += grid[i][0]
-		states[i][0] = sum
-	}
-	// 初始化states的第一行数据
-	sum = 0
-	for j := 0; j < cols; j++ {
-		sum += grid[0][j]
-		states[0][j] = sum
-	}
-
-	for i := 1; i < rows; i++ {
-		for j := 1; j < cols; j++ {
-			states[i][j] = grid[i][j] + min(states[i-1][j], states[i][j-1])
+		for j := 0; j < cols; j++ {
+			if i == 0 && j != 0 {
+				states[i][j] = grid[i][j] + states[i][j-1]
+			} else if i != 0 && j == 0 {
+				states[i][j] = grid[i][j] + states[i-1][i]
+			} else if i != 0 && j != 0 {
+				states[i][j] = grid[i][j] + min(states[i-1][j], states[i][j-1])
+			}
 		}
 	}
-
 	return states[rows-1][cols-1]
 }
 
@@ -117,6 +109,24 @@ func minPathSumWithDP2(grid [][]int) int {
 		}
 	}
 	return states[cols-1]
+}
+
+func minPathSumWithDP3(grid [][]int) int {
+	if len(grid) == 0 || len(grid[0]) == 0 {
+		return 0
+	}
+	for i := 0; i < len(grid); i++ {
+		for j := 0; j < len(grid[0]); j++ {
+			if i == 0 && j != 0 {
+				grid[i][j] = grid[i][j] + grid[i][j-1]
+			} else if i != 0 && j == 0 {
+				grid[i][j] = grid[i][j] + grid[i-1][j]
+			} else if i != 0 && j != 0 {
+				grid[i][j] = grid[i][j] + min(grid[i-1][j], grid[i][j-1])
+			}
+		}
+	}
+	return grid[len(grid)-1][len(grid[0])-1]
 }
 
 func min(a, b int) int {
